@@ -2,6 +2,7 @@
 
 int main()
 {
+	/*
 	LinkGraph<char,int> lg1;
 
 	for(int i=0; i<6; i++)
@@ -25,6 +26,28 @@ int main()
 	lg1.DFS('A');
 	cout<<endl<<"BFS order: ";
 	lg1.BFS('A');
+*/
+	LinkGraph<char,int> lg2;
+	for(int i=0; i<5; i++)
+		lg2.insertVertex('A'+i);
+
+	lg2.insertEdge(0, 1, 0);	
+	lg2.insertEdge(0, 2, 0);	
+	lg2.insertEdge(1, 2, 0);	
+	lg2.insertEdge(1, 3, 0);	
+	lg2.insertEdge(1, 4, 0);	
+	lg2.insertEdge(2, 3, 0);	
+	lg2.insertEdge(3, 4, 0);	
+	lg2.insertEdge(4, 0, 0);	
+	lg2.insertEdge(4, 2, 0);	
+
+	lg2.show();
+
+	cout<<endl<<"DFS order: ";
+	lg2.DFS('A');
+	cout<<endl<<"BFS order: ";
+	lg2.BFS('B');
+
 
 	return 0;
 }

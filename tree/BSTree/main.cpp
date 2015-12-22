@@ -3,6 +3,7 @@
 
 int main()
 {
+	/*
 	BSTree<int,float> tree;
 	BinTreeNode<int,float> s[]={ {2,9.9},{1,103.23},{3,23.54},{0,0.0},{0,0.0},{0,0.0},{0,0.0} };
 	tree.create1(s);
@@ -17,6 +18,10 @@ int main()
 
 	tree.remove(1);
 	tree.showLevelOrder();
-
+*/
+	BSTree<int,float> tree;
+	tree.create2();
+	tree.showInOrder();
+	
 	return 0;
 }
