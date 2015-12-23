@@ -1,5 +1,5 @@
-test: main.cpp AVLtree.cpp BSTree.cpp
-	g++ -o test main.cpp AVLtree.cpp BSTree.cpp
+test: main.cpp AVLtree.cpp
+	g++  -o test main.cpp AVLtree.cpp 
 
 clean:
 	rm test
