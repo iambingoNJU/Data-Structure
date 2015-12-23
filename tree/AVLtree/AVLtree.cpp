@@ -1,13 +1,12 @@
 #include <iostream>
-using namespace std;
-
 #include "SeqStack.cpp"
+using namespace std;
 
 template <class K, class T>
 struct AVLnode {
-	int bf;
 	K key;
 	T data;
+	int bf;
 	AVLnode<K,T> *leftChild, *rightChild;
 	
 	AVLnode(): leftChild(NULL), rightChild(NULL), bf(0) {}
@@ -34,23 +33,28 @@ protected:
 	void inOrder(AVLnode<K,T> *subTree, void (*visit)(AVLnode<K,T> *p));
 	void postOrder(AVLnode<K,T> *subTree, void (*visit)(AVLnode<K,T> *p));
 
-	AVLnode<K,T>* search(K k);
+	AVLnode<K,T>* search(K k, AVLnode<K,T> *subTree);
 	bool insert(K k,T d,AVLnode<K,T>* &ptr);
-	bool remove(K k,T &d,AVLnode<K,T>* &ptr);
-	int height(AVLnode<K,T>* ptr);
+	bool remove(K k,T &data,AVLnode<K,T>* &ptr);
+	int height(AVLnode<K,T>* subTree);
+	int size(AVLnode<K,T>* subTree);
+	void show(AVLnode<K,T>* subTree);
 
 public:
 	AVLtree(): root(NULL) {}
+	bool isEmpty() { return root == NULL; }
 	bool insert(K k,T d) { return insert(k,d,root); }
 	bool remove(K k,T &d) { return remove(k,d,root); }
 	int height() { return height(root); }
+	int size() { return size(root); }
 	void showInOrder() { inOrder(root, print); }
+	void show() { show(root); }
+	T search(K k) { AVLnode<K,T> *temp = search(k, root); return temp ? temp->data : 0; }
 };
 
 template <class K, class T>
 void AVLtree<K,T>::rotateL(AVLnode<K,T>* &ptr)
 {
-	cout<<"rotateL."<<endl;
 	AVLnode<K,T> *subL = ptr;
 	ptr = subL->rightChild;
 	subL->rightChild = ptr->leftChild;
@@ -62,7 +66,6 @@ void AVLtree<K,T>::rotateL(AVLnode<K,T>* &ptr)
 template <class K, class T>
 void AVLtree<K,T>::rotateR(AVLnode<K,T>* &ptr)
 {
-	cout<<"rotateR."<<endl;
 	AVLnode<K,T> *subR = ptr;
 	ptr = subR->leftChild;
 	subR->leftChild = ptr->rightChild;
@@ -74,7 +77,6 @@ void AVLtree<K,T>::rotateR(AVLnode<K,T>* &ptr)
 template <class K, class T>
 void AVLtree<K,T>::rotateLR(AVLnode<K,T>* &ptr)
 {
-	cout<<"rotateLR."<<endl;
 	AVLnode<K,T> *subR = ptr, *subL = ptr->leftChild;
 	ptr = subL->rightChild;
 
@@ -98,7 +100,6 @@ void AVLtree<K,T>::rotateLR(AVLnode<K,T>* &ptr)
 template <class K, class T>
 void AVLtree<K,T>::rotateRL(AVLnode<K,T>* &ptr)
 {
-	cout<<"rotateRL."<<endl;
 	AVLnode<K,T> *subL = ptr, *subR = ptr->rightChild;
 	ptr = subR->leftChild;
 
@@ -153,7 +154,7 @@ void AVLtree<K,T>::postOrder(AVLnode<K,T> *subTree, void (*visit)(AVLnode<K,T> *
 }
 
 template <class K, class T>
-bool AVLtree<K,T>::insert(K k, T d, AVLnode<K,T>* &ptr)
+bool AVLtree<K,T>::insert(K k, T data, AVLnode<K,T>* &ptr)
 {
 	AVLnode<K,T> *pr = NULL, *p = ptr, *q;
 	SeqStack<AVLnode<K,T>* > st;
@@ -168,7 +169,7 @@ bool AVLtree<K,T>::insert(K k, T d, AVLnode<K,T>* &ptr)
 			p = p->rightChild;
 	}
 
-	p = new AVLnode<K,T>(k,d);
+	p = new AVLnode<K,T>(k,data);
 	assert(p != NULL);
 	
 	if(pr == NULL)	//Empty tree.
@@ -209,9 +210,164 @@ bool AVLtree<K,T>::insert(K k, T d, AVLnode<K,T>* &ptr)
 	else
 	{
 		st.getTop(q);
-		if(q->data > pr->data)	q->leftChild = pr;
+		if(q->key > pr->key)	q->leftChild = pr;
 		else	q->rightChild = pr;
 	}
 
 	return true;
 }
+
+template <class K, class T>
+bool AVLtree<K,T>::remove(K k, T &data, AVLnode<K,T>* &ptr)
+{
+	AVLnode<K,T> *pr = NULL, *p = ptr, *q, *ppr;
+	int d, dd = 0;
+	SeqStack<AVLnode<K,T>* > st;
+	while(p)
+	{
+		if(k == p->key)	break;
+		pr = p;
+		st.push(pr);
+		if(k < p->key)	p = p->leftChild;
+		else	p = p->rightChild;
+	}
+
+	if(p == NULL)	return false;	//Unable to find it.
+	if(p->leftChild && p->rightChild)	// p has two children.
+	{
+		pr = p;
+		st.push(pr);
+		q = p->leftChild;
+		while(q->rightChild)
+		{
+			pr = q;
+			st.push(pr);
+			q = q->rightChild;
+		}
+		p->key = q->key;
+		p->data = q->data;
+		p = q;
+	}
+
+	if(p->leftChild)	q = p->leftChild;
+	else	q = p->rightChild;
+
+	if(pr == NULL) ptr = q;		//Node to be deleted is root.
+	else
+	{
+		if(pr->leftChild == p)	pr->leftChild = q;
+		else	pr->rightChild = q;
+		while(st.pop(pr))
+		{
+			if(pr->rightChild == q)		pr->bf--;
+			else	pr->bf++;
+			if(st.getTop(ppr))
+				dd = (ppr->leftChild == pr) ? -1 : 1;
+			else
+				dd = 0;
+			
+			if(pr->bf == 1 || pr->bf == -1)	break;
+			if(pr->bf != 0)
+			{
+				if(pr->bf < 0) { d = -1; q = pr->leftChild; }
+				else	{ d = 1; q = pr->rightChild; }
+				if(q->bf == 0)
+				{
+					if(d == -1)
+					{
+						rotateR(pr);
+						pr->bf = 1;
+						pr->leftChild->bf = -1;
+					}
+					else
+					{
+						rotateL(pr);
+						pr->bf = -1;
+						pr->rightChild->bf = 1;
+					}
+					break;
+				}
+				if(q->bf == d)
+				{
+					if(d == -1)	rotateR(pr);
+					else	rotateL(pr);
+				}
+				else
+				{
+					if(d == -1)	rotateLR(pr);
+					else	rotateRL(pr);
+				}
+				if(dd == -1)	ppr->leftChild = pr;
+				else if(dd == 1)	ppr->rightChild = pr;
+			}
+			q = pr;
+		}
+
+		if(st.isEmpty())	ptr = pr;
+	}
+
+	data = p->data;
+	delete p;
+	return true;
+}
+
+template <class K, class T>
+AVLnode<K,T>* AVLtree<K,T>::search(K k, AVLnode<K,T> *subTree)
+{
+	if(subTree)
+	{
+		if(subTree->key == k)
+			return subTree;
+		else if(subTree->key < k)
+			return search(k, subTree->rightChild);
+		else
+			return search(k, subTree->rightChild);
+	}
+	else
+		return NULL;
+}
+
+template <class K, class T>
+int AVLtree<K,T>::height(AVLnode<K,T>* subTree)
+{
+	if(subTree == NULL)
+		return 0;
+	else
+	{
+		int i = height(subTree->leftChild);
+		int j = height(subTree->rightChild);
+		return (i < j) ? j+1 : i+1;
+	}
+}
+
+template <class K, class T>
+int AVLtree<K,T>::size(AVLnode<K,T>* subTree)
+{
+	if(subTree == NULL)
+		return 0;
+	else
+		return 1 + size(subTree->leftChild) + size(subTree->rightChild);
+}
+
+template <class K, class T>
+void AVLtree<K,T>::show(AVLnode<K,T>* subTree)
+{
+	if(subTree)
+	{
+		cout<<subTree->key<<"\t";
+		if(subTree->leftChild)
+			cout<<subTree->leftChild->key;
+		cout<<"\t";
+		if(subTree->rightChild)
+			cout<<subTree->rightChild->key;
+		cout<<"\t";
+		cout<<endl;
+
+		if(subTree->leftChild)
+			show(subTree->leftChild);
+		if(subTree->rightChild)
+			show(subTree->rightChild);
+	}
+
+}
+
