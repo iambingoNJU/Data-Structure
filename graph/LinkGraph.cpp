@@ -2,7 +2,7 @@
 using namespace std;
 
 #include <assert.h>
-#include "LinkedQueue.cpp"
+#include "../queue/LinkedQueue/LinkedQueue.cpp"
 const int DefaultVertices = 30;
 
 template <class T, class E>

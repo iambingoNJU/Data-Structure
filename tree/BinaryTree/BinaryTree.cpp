@@ -2,8 +2,8 @@
 using namespace std;
 
 #define EndMark '#'
-#include "SeqQueue.cpp"
-#include "SeqStack.cpp"
+#include "../../queue/SeqQueue/SeqQueue.cpp"
+#include "../../stack/SeqStack/SeqStack.cpp"
 
 template <class T>
 struct BinTreeNode

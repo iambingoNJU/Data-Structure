@@ -1,7 +1,7 @@
 #include <iostream>
+#include "../../queue/SeqQueue/SeqQueue.cpp"
 using namespace std;
 
-#include "SeqQueue.cpp"
 #define EndMark 0
 
 template <class K, class T>

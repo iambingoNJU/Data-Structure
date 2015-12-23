@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SeqStack.cpp"
+#include "../../stack/LinkedStack/LinkedStack.cpp"
 using namespace std;
 
 template <class K, class T>
@@ -157,7 +157,7 @@ template <class K, class T>
 bool AVLtree<K,T>::insert(K k, T data, AVLnode<K,T>* &ptr)
 {
 	AVLnode<K,T> *pr = NULL, *p = ptr, *q;
-	SeqStack<AVLnode<K,T>* > st;
+	LinkedStack<AVLnode<K,T>* > st;
 	while(p)
 	{
 		if(p->key == k)	return false;
@@ -222,7 +222,7 @@ bool AVLtree<K,T>::remove(K k, T &data, AVLnode<K,T>* &ptr)
 {
 	AVLnode<K,T> *pr = NULL, *p = ptr, *q, *ppr;
 	int d, dd = 0;
-	SeqStack<AVLnode<K,T>* > st;
+	LinkedStack<AVLnode<K,T>* > st;
 	while(p)
 	{
 		if(k == p->key)	break;

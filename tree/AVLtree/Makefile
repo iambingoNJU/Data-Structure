@@ -1,5 +1,5 @@
-test: main.cpp AVLtree.cpp SeqStack.cpp
-	g++ -o test main.cpp AVLtree.cpp SeqStack.cpp
+test: main.cpp AVLtree.cpp 
+	g++ -o test main.cpp AVLtree.cpp
 
 clean:
 	rm test
