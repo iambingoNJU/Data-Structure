@@ -1,3 +1,6 @@
+#ifndef __LINKEDSTACK_CPP__
+#define __LINKEDSTACK_CPP__
+
 #include <iostream>
 using namespace std;
 
@@ -95,3 +98,6 @@ void LinkedStack<T>::showme()
 	}
 	cout<<"]"<<endl;
 }
+
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __BSTREE_CPP__
+#define __BSTREE_CPP__
+
 #include <iostream>
 #include "../../queue/SeqQueue/SeqQueue.cpp"
 using namespace std;
@@ -275,3 +278,6 @@ void BSTree<K,T>::max()
 
 	cout<<temp->key<<"-"<<temp->data<<endl<<"Height: "<<cnt<<endl;
 }
+
+
+#endif

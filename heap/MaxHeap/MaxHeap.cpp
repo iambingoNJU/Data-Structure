@@ -1,3 +1,6 @@
+#ifndef __MAXHEAP_CPP__
+#define __MAXHEAP_CPP__
+
 #include <iostream>
 using namespace std;
 #include <assert.h>
@@ -114,3 +117,5 @@ bool MaxHeap<E>::removeMax(E& x)
 	return true;
 }
 
+
+#endif

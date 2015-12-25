@@ -1,3 +1,6 @@
+#ifndef __LINKEDLIST_CPP__
+#define __LINKEDLIST_CPP__
+
 #include <iostream>
 using namespace std;
 
@@ -36,6 +39,9 @@ public:
 	void output();
 	int position(LinkNode<T> *dest);
 	LinkedList<T>& operator=(LinkedList<T>& L);
+	LinkedList<T>& operator+=(LinkedList<T>& L);
+	LinkedList<T>& operator-=(LinkedList<T>& L);
+	LinkedList<T>& operator*=(LinkedList<T>& L);
 };
 
 template <class T>
@@ -247,6 +253,111 @@ LinkedList<T>& LinkedList<T>::operator=(LinkedList<T>& L)
 }
 
 template <class T>
+LinkedList<T>& LinkedList<T>::operator-=(LinkedList<T>& L)
+{
+	LinkNode<T> *t1 = head, *t2;
+	T temp;
+	while(t1)
+	{
+		if(L.search(t1->data))
+		{
+			t2 = t1->next;
+			remove(position(t1), temp);
+			t1 = t2;
+		}
+		else
+			t1 = t1->next;
+	}
+
+	return *this;
+}
+
+
+template <class T>
+LinkedList<T>& LinkedList<T>::operator+=(LinkedList<T>& L)
+{
+	LinkNode<T> *t1 = head, *t2 = L.getHead(), *temp = NULL, *t3 = new LinkNode<T>;
+	while(t1 && t2)
+	{
+		if(t1->data < t2->data)
+		{
+			t3->next = new LinkNode<T>(t1->data);
+			t1 = t1->next;
+		}
+		else if(t1->data > t2->data)
+		{
+			t3->next = new LinkNode<T>(t2->data);
+			t2 = t2->next;
+		}
+		else
+		{
+			t3->next = new LinkNode<T>(t1->data);
+			t1 = t1->next;
+			t2 = t2->next;
+		}
+
+		if(temp == NULL)	temp = t3;
+
+		t3 = t3->next;
+	}
+
+	while(t1)
+	{
+		t3->next = new LinkNode<T>(t1->data);
+		t1 = t1->next;
+
+		if(temp == NULL)	temp = t3;
+		t3 = t3->next;
+	}
+	while(t2)
+	{
+		t3->next = new LinkNode<T>(t2->data);
+		t2 = t2->next;
+
+		if(temp == NULL)	temp = t3;
+		t3 = t3->next;
+	}
+	t3->next = NULL;
+
+	clear();
+
+	head = temp->next;
+	delete temp;
+
+	return *this;
+}
+
+template <class T>
+LinkedList<T>& LinkedList<T>::operator*=(LinkedList<T>& L)
+{
+	LinkNode<T> *t1 = head, *t2 = L.getHead(), *temp = NULL, *t3 = new LinkNode<T>;
+	while(t1 && t2)
+	{
+		if(t1->data < t2->data)
+			t1 = t1->next;
+		else if(t1->data > t2->data)
+			t2 = t2->next;
+		else
+		{
+			t3->next = new LinkNode<T>(t1->data);
+			t1 = t1->next;
+			t2 = t2->next;
+			if(temp == NULL)	temp = t3;
+			t3 = t3->next;
+		}
+	}
+
+	t3->next = NULL;
+
+	clear();
+
+	head = temp->next;
+	delete temp;
+
+	return *this;
+}
+
+template <class T>
 void LinkedList<T>::sort(int type)
 {
 	if(type!=0 && type!=1)
@@ -295,3 +406,6 @@ int LinkedList<T>::position(LinkNode<T> *dest)
 	else
 		return -1;
 }
+
+
+#endif

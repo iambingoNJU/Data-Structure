@@ -1,3 +1,6 @@
+#ifndef __SEQQUEUE_CPP__
+#define __SEQQUEUE_CPP__
+
 #include <iostream>
 #include <assert.h>
 using namespace std;
@@ -82,3 +85,6 @@ void SeqQueue<T>::showme()
 		cout<<elements[(front+i)%maxSize]<<" ";
 	cout<<"]"<<endl;
 }
+
+
+#endif

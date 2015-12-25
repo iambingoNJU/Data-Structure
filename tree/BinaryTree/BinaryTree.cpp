@@ -1,3 +1,6 @@
+#ifndef __BINARYTREE_CPP__
+#define __BINARYTREE_CPP__
+
 #include <iostream>
 using namespace std;
 
@@ -201,3 +204,6 @@ int BinaryTree<T>::level(BinTreeNode<T> *subTree, BinTreeNode<T> *dest)
 	else
 		return 0;
 }
+
+
+#endif

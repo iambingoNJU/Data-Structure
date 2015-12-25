@@ -1,3 +1,6 @@
+#ifndef __AVLTREE_CPP__
+#define __AVLTREE_CPP__
+
 #include <iostream>
 #include "../../stack/LinkedStack/LinkedStack.cpp"
 using namespace std;
@@ -371,3 +374,5 @@ void AVLtree<K,T>::show(AVLnode<K,T>* subTree)
 
 }
 
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef __MINHEAP_CPP__
+#define __MINHEAP_CPP__
+
 #include <iostream>
 using namespace std;
 #include <assert.h>
@@ -114,3 +117,5 @@ bool MinHeap<E>::min(E& x)
 	return true;
 }
 
+
+#endif

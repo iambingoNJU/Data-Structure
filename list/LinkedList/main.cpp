@@ -23,7 +23,7 @@ int main()
 	cout<<"After set the third number to 100."<<endl;
 	list1.output();
 	
-	list1.sort(1);
+	list1.sort();
 	cout<<"After sort list."<<endl;
 	list1.output();
 
@@ -34,6 +34,27 @@ int main()
 	cout<<"After remove the first element."<<endl;
 	list1.output();
 
+	LinkedList<int> list3;
+	list3.input(0,1);
+	list3.output();
+
+	list2 = list3;
+
+	list3 -= list1;
+	cout<<"list3 - list1 = ";
+	list3.output();
+
+	list3 = list2;
+	list3 += list1;
+	cout<<"list3 + list1 = ";
+	list3.output();
+
+	list3 = list2;
+	list3 *= list1;
+	cout<<"list3 * list1 = ";
+	list3.output();
+
+/*
 	LinkedList<int> list3(list1);
 	cout<<"list3: ";
 	list3.output();
@@ -49,6 +70,6 @@ int main()
 	cout<<"Create a list.(insert from tail)"<<endl;
 	list2.input(0,1);
 	list2.output();
-
+*/
 	return 0;
 }

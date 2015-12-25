@@ -1,3 +1,6 @@
+#ifndef __LINKEDQUEUE_CPP__
+#define __LINKEDQUEUE_CPP__
+
 #include <iostream>
 #include <assert.h>
 using namespace std;
@@ -115,3 +118,6 @@ void LinkedQueue<T>::showme()
 	}
 	cout<<"]"<<endl;
 }
+
+
+#endif

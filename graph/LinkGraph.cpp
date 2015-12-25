@@ -1,3 +1,6 @@
+#ifndef __LINKGRAPH_CPP__
+#define __LINKGRAPH_CPP__
+
 #include <iostream>
 using namespace std;
 
@@ -346,3 +349,5 @@ void LinkGraph<T,E>::BFS(T v)
 	delete []visited;
 }
 
+
+#endif

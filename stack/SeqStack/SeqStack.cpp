@@ -1,3 +1,6 @@
+#ifndef __SEQSTACK_CPP__
+#define __SEQSTACK_CPP__
+
 #include <iostream>
 using namespace std;
 
@@ -79,3 +82,6 @@ bool SeqStack<T>::getTop(T& x)
 	x=elements[top];
 	return true;
 }
+
+
+#endif
