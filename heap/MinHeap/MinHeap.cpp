@@ -20,7 +20,7 @@ public:
 	MinHeap(E arr[], int n);
 	~MinHeap() { delete []heap; }
 	bool insert(E x);
-	bool min(E& x);
+	bool removeMin(E& x);
 	bool isEmpty() { return currentSize == 0; }
 	bool isFull() { return currentSize == maxSize; }
 	void clear() { currentSize = 0; }
@@ -103,7 +103,7 @@ bool MinHeap<E>::insert(E x)
 }
 
 template <class E>
-bool MinHeap<E>::min(E& x)
+bool MinHeap<E>::removeMin(E& x)
 {
 	if(isEmpty())
 	{

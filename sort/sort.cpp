@@ -1,6 +1,8 @@
 #ifndef __SORT_CPP__
 #define __SORT_CPP__
 
+#include "../heap/MinHeap/MinHeap.cpp"
+
 //***********************************************************************************//
 /* bubble sort */
 
@@ -80,6 +82,84 @@ void insert_sort(T s[], int left, int right)
 			} while(j>=left && temp<s[j]);
 			s[j+1] = temp;
 		}
+}
+
+template <class T>
+void binary_insert_sort(T s[], int left, int right)
+{
+	T temp;
+	int low, high, middle;
+	for(int i=left+1; i<=right; i++)
+	{
+		temp = s[i];
+		low = left;
+		high = i-1;
+		while(low <= high)
+		{
+			middle = (low + high)/2;
+			if(temp < s[middle])
+				high = middle - 1;
+			else
+				low = middle + 1;
+		}
+		for(int k=i-1; k>=low; k--)	s[k+1] = s[k];
+		s[low] = temp;
+	}
+}
+
+template <class T>
+void shell_sort(T s[], int left, int right)
+{
+	T temp;
+	int i, j, gap = right - left + 1;
+	do {
+		gap = gap/3 +1;
+		for(i=left+gap; i<=right; i++)
+			if(s[i] < s[i-gap])
+			{
+				temp = s[i];
+				j = i - gap;
+				do {
+					s[j+gap] = s[j];
+					j -= gap;
+				} while(j>=left && temp<s[j]);
+				s[j+gap] = temp;
+			}
+	} while(gap > 1);
+}
+
+//***********************************************************************************//
+/* select sort */
+
+template <class T>
+void select_sort(T s[], int left, int right)
+{
+	T temp;
+	for(int i=left; i<right; i++)
+	{
+		int k = i;
+		for(int j=i+1; j<=right; j++)
+			if(s[j] < s[k])	k = j;
+
+		if(k != i)
+		{
+			temp = s[k];
+			s[k] = s[i];
+			s[i] = temp;
+		}
+	}
+}
+
+template <class T>
+void heap_sort(T s[], int sz)
+{
+	MinHeap<T> mh(s, sz);
+	T temp;
+	for(int i=0; i<sz; i++)
+	{
+		mh.removeMin(temp);
+		s[i] = temp;
+	}
 }
 
 //***********************************************************************************//

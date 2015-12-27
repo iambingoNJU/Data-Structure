@@ -13,7 +13,7 @@ int main()
 	int temp;
 	for(int i=0; i<ARR_SIZE+2; i++)
 	{
-		mh.min(temp);
+		mh.removeMin(temp);
 		cout<<temp<<"->";
 	}
 	cout<<"\b\b  "<<endl;
