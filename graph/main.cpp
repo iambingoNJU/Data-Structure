@@ -43,6 +43,9 @@ int main()
 
 	lg2.show();
 
+	for(int i=0; i<5; i++)
+		cout<<((char)('A' + i))<<" outdegrees: "<<lg2.outDegrees((char)('A'+i))<<"\t\t"<<"indegrees: "<<lg2.inDegrees((char)('A'+i))<<endl;
+
 	cout<<endl<<"DFS order: ";
 	lg2.DFS('A');
 	cout<<endl<<"BFS order: ";

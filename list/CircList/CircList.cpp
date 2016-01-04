@@ -1,21 +1,24 @@
+#ifndef __CIRCLIST_CPP__
+#define __CIRCLIST_CPP__
+
 #include <iostream>
 using namespace std;
 
 #include <assert.h>
 
 template <class T>
-struct LinkNode {
+struct CircNode {
 	T data;
-	LinkNode<T> *next;
-	LinkNode(LinkNode<T> *ptr=NULL) { next=ptr; }
-	LinkNode(T item,LinkNode<T> *ptr=NULL) { data=item; next=ptr; }
+	CircNode<T> *next;
+	CircNode(CircNode<T> *ptr=NULL) { next=ptr; }
+	CircNode(T item,CircNode<T> *ptr=NULL) { data=item; next=ptr; }
 };
 
 template <class T>
 class CircList
 {
 protected:
-	LinkNode<T> *head;
+	CircNode<T> *head;
 public:
 	CircList() { head=NULL; }
 	CircList(CircList<T> &L);
@@ -23,9 +26,9 @@ public:
 	void clear();
 	int lenth();
 	bool isEmpty() { return head==NULL; }
-	LinkNode<T>* getHead() { return head; }
-	LinkNode<T>* locate(int i);
-	LinkNode<T>* search(T x);
+	CircNode<T>* getHead() { return head; }
+	CircNode<T>* locate(int i);
+	CircNode<T>* search(T x);
 	bool getData(int i,T &x);
 	bool setData(int i,T x);
 	bool insert(int i,T x);
@@ -41,22 +44,22 @@ CircList<T>::CircList(CircList<T>& L)
 {
 	if(!L.isEmpty())
 	{
-		LinkNode<T> *lhead=L.getHead();
+		CircNode<T> *lhead=L.getHead();
 		T temp;
 		L.getData(0,temp);
-		head=new LinkNode<T>(temp);
-		LinkNode<T> *srcptr=lhead->next, *tail=head;
+		head=new CircNode<T>(temp);
+		CircNode<T> *srcptr=lhead->next, *tail=head;
 		if(srcptr->next!=lhead)
 		{
 			while(srcptr->next!=lhead)
 			{
 				temp=srcptr->data;
-				tail->next=new LinkNode<T>(temp);
+				tail->next=new CircNode<T>(temp);
 				tail=tail->next;
 				srcptr=srcptr->next;
 			}
 			temp=srcptr->data;
-			tail->next=new LinkNode<T>(temp);
+			tail->next=new CircNode<T>(temp);
 			tail=tail->next;
 		}
 		tail->next=head;
@@ -68,22 +71,22 @@ CircList<T>& CircList<T>::operator=(CircList<T>& L)
 {
 	if(!L.isEmpty())
 	{
-		LinkNode<T> *lhead=L.getHead();
+		CircNode<T> *lhead=L.getHead();
 		T temp;
 		L.getData(0,temp);
-		head=new LinkNode<T>(temp);
-		LinkNode<T> *srcptr=lhead->next, *tail=head;
+		head=new CircNode<T>(temp);
+		CircNode<T> *srcptr=lhead->next, *tail=head;
 		if(srcptr->next!=lhead)
 		{
 			while(srcptr->next!=lhead)
 			{
 				temp=srcptr->data;
-				tail->next=new LinkNode<T>(temp);
+				tail->next=new CircNode<T>(temp);
 				tail=tail->next;
 				srcptr=srcptr->next;
 			}
 			temp=srcptr->data;
-			tail->next=new LinkNode<T>(temp);
+			tail->next=new CircNode<T>(temp);
 			tail=tail->next;
 		}
 		tail->next=head;
@@ -95,7 +98,7 @@ template <class T>
 void CircList<T>::clear()
 {
 	if(head==NULL) return;
-	LinkNode<T> *temp,*originHead=head;
+	CircNode<T> *temp,*originHead=head;
 	while(head->next!=originHead)
 	{
 		temp=head;
@@ -111,7 +114,7 @@ int CircList<T>::lenth()
 {
 	if(head==NULL) return 0;
 	int cnt=0;
-	LinkNode<T> *temp=head;
+	CircNode<T> *temp=head;
 	while(temp->next!=head)
 	{
 		cnt++;
@@ -121,10 +124,10 @@ int CircList<T>::lenth()
 }
 
 template <class T>
-LinkNode<T>* CircList<T>::locate(int i)
+CircNode<T>* CircList<T>::locate(int i)
 {
 	if(i<0 || i>=lenth()) return NULL;
-	LinkNode<T> *temp=head;
+	CircNode<T> *temp=head;
 	while(i>0)
 	{
 		temp=temp->next;
@@ -142,15 +145,15 @@ void CircList<T>::input(T endFlag,int type)
 		output();
 		cout<<"Please enter list elements(END with "<<endFlag<<"):"<<endl;
 		T temp;
-		LinkNode<T> *newNode;
+		CircNode<T> *newNode;
 		while((cin>>temp)&&(temp!=endFlag))
 		{
-			newNode=new LinkNode<T>(temp);
+			newNode=new CircNode<T>(temp);
 			assert(newNode!=NULL);
 			newNode->next=head;
 			head=newNode;
 		}
-		LinkNode<T> *tail=locate(lenth()-1);
+		CircNode<T> *tail=locate(lenth()-1);
 		tail->next=head;
 
 	}
@@ -160,10 +163,10 @@ void CircList<T>::input(T endFlag,int type)
 		output();
 		cout<<"Please enter list elements(END with "<<endFlag<<"):"<<endl;
 		T temp;
-		LinkNode<T> *newNode,*tail=locate(lenth()-1);
+		CircNode<T> *newNode,*tail=locate(lenth()-1);
 		while((cin>>temp)&&(temp!=endFlag))	
 		{
-			newNode=new LinkNode<T>(temp);
+			newNode=new CircNode<T>(temp);
 			assert(newNode!=NULL);
 			if(tail==NULL)
 			{
@@ -190,7 +193,7 @@ void CircList<T>::output()
 		cout<<"NULL List!"<<endl;
 		return;
 	}
-	LinkNode<T> *temp=head;
+	CircNode<T> *temp=head;
 	cout<<"List elements: "<<"("<<lenth()<<")[ ";
 	while(temp->next!=head)
 	{
@@ -202,10 +205,10 @@ void CircList<T>::output()
 }
 
 template <class T>
-LinkNode<T>* CircList<T>::search(T x)
+CircNode<T>* CircList<T>::search(T x)
 {
 	if(head==NULL) return NULL;
-	LinkNode<T> *temp=head;
+	CircNode<T> *temp=head;
 	while(temp->next!=head)
 	{
 		if(temp->data==x)
@@ -221,7 +224,7 @@ LinkNode<T>* CircList<T>::search(T x)
 template <class T>
 bool CircList<T>::getData(int i,T& x)
 {
-	LinkNode<T> *temp=locate(i);
+	CircNode<T> *temp=locate(i);
 	if(temp==NULL)
 		return false;
 	x=temp->data;
@@ -231,7 +234,7 @@ bool CircList<T>::getData(int i,T& x)
 template <class T>
 bool CircList<T>::setData(int i,T x)
 {
-	LinkNode<T> *temp=locate(i);
+	CircNode<T> *temp=locate(i);
 	if(temp==NULL)
 		return false;
 	temp->data=x;
@@ -243,7 +246,7 @@ bool CircList<T>::insert(int i,T x)
 {
 	if(i==-1)
 	{
-		LinkNode<T> *newNode=new LinkNode<T>(x), *tail=locate(lenth()-1);
+		CircNode<T> *newNode=new CircNode<T>(x), *tail=locate(lenth()-1);
 		newNode->next=head;
 		head=newNode;
 		if(tail!=NULL)
@@ -252,10 +255,10 @@ bool CircList<T>::insert(int i,T x)
 			head->next=head;
 		return true;
 	}
-	LinkNode<T> *temp=locate(i);
+	CircNode<T> *temp=locate(i);
 	if(temp==NULL)
 		return false;
-	LinkNode<T> *newNode=new LinkNode<T>(x);
+	CircNode<T> *newNode=new CircNode<T>(x);
 	newNode->next=temp->next;
 	temp->next=newNode;
 	return true;
@@ -264,14 +267,14 @@ bool CircList<T>::insert(int i,T x)
 template <class T>
 bool CircList<T>::remove(int i,T& x)
 {
-	LinkNode<T> *temp=locate(i),*pre=locate(i-1);
+	CircNode<T> *temp=locate(i),*pre=locate(i-1);
 	if(temp==NULL)
 		return false;
 
 	x=temp->data;
 	if(pre==NULL)
 	{
-		LinkNode<T> *tail=locate(lenth()-1);
+		CircNode<T> *tail=locate(lenth()-1);
 		head=head->next;
 		tail->next=head;
 	}
@@ -282,3 +285,4 @@ bool CircList<T>::remove(int i,T& x)
 }
 
 
+#endif

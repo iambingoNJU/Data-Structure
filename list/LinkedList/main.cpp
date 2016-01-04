@@ -10,7 +10,7 @@ int main()
 	cout<<"Insert 0-9 into list from head."<<endl;
 	for(int i=0;i<10;i++)
 		list1.insert(-1,i);
-	list1.output();
+	cout<<list1<<endl;
 
 	cout<<"Insert 10-19 into list from tail."<<endl;
 	for(int i=10;i<20;i++)
@@ -26,6 +26,13 @@ int main()
 	list1.sort();
 	cout<<"After sort list."<<endl;
 	list1.output();
+
+	list1.insert(-1, 0);
+	list1.insert(1, 1);
+	cout<<list1<<endl;
+
+	list1.single();
+	cout<<list1<<endl;
 
 	list1.getData(3,temp);
 	cout<<"Get the third number:"<<temp<<endl;

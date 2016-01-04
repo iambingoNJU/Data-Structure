@@ -52,7 +52,7 @@ public:
 	int size() { return size(root); }
 	void showInOrder() { inOrder(root, print); }
 	void show() { show(root); }
-	T search(K k) { AVLnode<K,T> *temp = search(k, root); return temp ? temp->data : 0; }
+	T search(K k) { AVLnode<K,T> *temp = search(k, root);	return temp ? temp->data : 0;}
 };
 
 template <class K, class T>
@@ -324,7 +324,7 @@ AVLnode<K,T>* AVLtree<K,T>::search(K k, AVLnode<K,T> *subTree)
 		else if(subTree->key < k)
 			return search(k, subTree->rightChild);
 		else
-			return search(k, subTree->rightChild);
+			return search(k, subTree->leftChild);
 	}
 	else
 		return NULL;

@@ -3,7 +3,7 @@
 
 int main()
 {
-/*
+
 	AVLtree<int,char> at;
 
 	at.insert(15,'g');
@@ -21,12 +21,14 @@ int main()
 	at.insert(16,'n');
 	at.insert(13,'x');
 
-	char temp;
-	at.remove(4,temp);
-	at.remove(9,temp);
+	at.showInOrder();
 
-	at.show();
-*/
+	cout<<endl<<"key 1: "<<at.search(1)<<endl;
+	cout<<"key 2: "<<at.search(2)<<endl;
+	cout<<"key 15: "<<at.search(15)<<endl;
+	cout<<"key 26: "<<at.search(26)<<endl;
+
+/*
 	AVLtree<string,int> at;
 
 	at.insert("DEC",12);
@@ -54,6 +56,9 @@ int main()
 	at.remove("FEB",temp);
 	at.show();
 	cout<<"number: "<<at.size()<<endl;
+
+	cout<<at.search(string("JUL"))<<endl;
+*/
 
 	return 0;
 }

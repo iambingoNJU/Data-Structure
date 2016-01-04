@@ -13,7 +13,7 @@ int main()
 	list1.output();
 
 	list1.remove(0,temp);
-	LinkNode<int> *h=list1.getHead();
+	CircNode<int> *h=list1.getHead();
 	int k=100;
 	while(k>0)
 	{

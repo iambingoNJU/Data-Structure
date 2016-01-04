@@ -59,6 +59,10 @@ public:
 	void showVertex();
 	void showEdge();
 	void show() { showVertex(); showEdge(); }
+	int outDegrees(int v);
+	int outDegrees(T v) { return outDegrees(getVertexPos(v)); }
+	int inDegrees(int v);
+	int inDegrees(T v) { return inDegrees(getVertexPos(v)); }
 	void DFS(T v);
 	void BFS(T v);
 };
@@ -295,6 +299,44 @@ void LinkGraph<T,E>::showEdge()
 		}
 		cout<<endl;
 	}
+}
+
+template <class T, class E>
+int LinkGraph<T,E>::outDegrees(int v)
+{
+	assert(v>=0 && v<maxVertices);
+	int cnt = 0;
+	Edge<T,E> *p = NodeTable[v].adj;
+	while(p != NULL)
+	{
+		p = p->next;
+		cnt++;
+	}
+
+	return cnt;
+}
+
+template <class T, class E>
+int LinkGraph<T,E>::inDegrees(int v)
+{
+	int cnt = 0;
+	Edge<T,E> *p = NULL;
+	for(int i=0; i<numVertices; i++)
+	{
+		p = NodeTable[i].adj;
+		while(p)
+		{
+			if(p->dest == v)
+			{
+				cnt ++;
+				break;
+			}
+			else
+				p = p->next;
+		}
+	}
+
+	return cnt;
 }
 
 template <class T, class E>

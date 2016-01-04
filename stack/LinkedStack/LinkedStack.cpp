@@ -7,19 +7,19 @@ using namespace std;
 #include <assert.h>
 
 template <class T>
-struct LinkNode
+struct StackNode
 {
 	T data;
-	LinkNode<T> *next;
-	LinkNode(LinkNode<T> *ptr=NULL) { next=ptr;}
-	LinkNode(const T& item,LinkNode<T> *ptr=NULL) { data=item; next=ptr; }
+	StackNode<T> *next;
+	StackNode(StackNode<T> *ptr=NULL) { next=ptr;}
+	StackNode(const T& item,StackNode<T> *ptr=NULL) { data=item; next=ptr; }
 };
 
 template <class T>
 class LinkedStack
 {
 private:
-	LinkNode<T> *head;
+	StackNode<T> *head;
 public:
 	LinkedStack(): head(NULL) {}
 	~LinkedStack() { clear(); }
@@ -35,7 +35,7 @@ public:
 template <class T>
 void LinkedStack<T>::clear()
 {
-	LinkNode<T> *temp=NULL;
+	StackNode<T> *temp=NULL;
 	while(head!=NULL)
 	{
 		temp=head;
@@ -47,7 +47,7 @@ void LinkedStack<T>::clear()
 template <class T>
 void LinkedStack<T>::push(const T& x)
 {
-	head=new LinkNode<T>(x,head);
+	head=new StackNode<T>(x,head);
 	assert(head!=NULL);
 }
 
@@ -56,7 +56,7 @@ bool LinkedStack<T>::pop(T& x)
 {
 	if(isEmpty())
 		return false;
-	LinkNode<T> *temp=head;
+	StackNode<T> *temp=head;
 	head=head->next;
 	x=temp->data;
 	delete temp;
@@ -75,7 +75,7 @@ bool LinkedStack<T>::getTop(T& x)
 template <class T>
 int LinkedStack<T>::getSize()
 {
-	LinkNode<T> *temp=head;
+	StackNode<T> *temp=head;
 	int cnt=0;
 	while(temp!=NULL)
 	{
@@ -90,7 +90,7 @@ void LinkedStack<T>::showme()
 {
 	cout<<"Stack elements from top to bottom:"<<endl;
 	cout<<"("<<getSize()<<") [ ";
-	LinkNode<T> *temp=head;
+	StackNode<T> *temp=head;
 	while(temp!=NULL)
 	{
 		cout<<temp->data<<" ";

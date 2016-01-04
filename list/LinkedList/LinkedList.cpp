@@ -35,6 +35,7 @@ public:
 	bool remove(int i,T& x);
 	bool isEmpty() { return head==NULL; }
 	void sort(int type=0);	//type==0 means from small to big, otherwise(type==1) the opposite.
+	void single();		//delete those repeated nodes.
 	void input(T endFlag=0,int type=0); //type==0 means insert from head, type==1 means insert from tail.
 	void output();
 	int position(LinkNode<T> *dest);
@@ -42,6 +43,18 @@ public:
 	LinkedList<T>& operator+=(LinkedList<T>& L);
 	LinkedList<T>& operator-=(LinkedList<T>& L);
 	LinkedList<T>& operator*=(LinkedList<T>& L);
+	friend ostream& operator<<(ostream& out, LinkedList<T>& list)
+	{
+		LinkNode<T> *temp=list.getHead();
+		out<<"("<<list.lenth()<<")[ ";
+		while(temp!=NULL)
+		{
+			out<<temp->data<<", ";
+			temp=temp->next;
+		}
+		out<<"\b\b "<<"]";
+		return out;
+	}
 };
 
 template <class T>
@@ -388,6 +401,28 @@ void LinkedList<T>::sort(int type)
 		}
 		if(!flag)	break;
 		len--;
+	}
+}
+
+template <class T>
+void LinkedList<T>::single()
+{
+	if(head == NULL || head->next == NULL)	return;
+	LinkNode<T> *p = head->next, *pre = head, *temp = NULL;
+	while(p)
+	{
+		if(pre->data == p->data)
+		{
+			temp = p;
+			p = p->next;
+			pre->next = p;
+			delete temp;		
+		}
+		else
+		{
+			pre = p;
+			p = p->next;
+		}
 	}
 }
 

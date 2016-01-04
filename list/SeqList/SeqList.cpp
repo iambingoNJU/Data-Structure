@@ -1,7 +1,10 @@
+#ifndef __SEQLIST_CPP__
+#define __SEQLIST_CPP__
+
 #include <iostream>
 using namespace std;
 
-const int defaultSize=50;
+#define SEQLIST_SIZE 50
 const int increment=10;
 
 template <class T>
@@ -14,7 +17,7 @@ protected:
 	bool resize(int size);
 
 public:
-	SeqList(int size=defaultSize);
+	SeqList(int size=SEQLIST_SIZE);
 	SeqList(SeqList<T>& L);
 	~SeqList(){delete[] data;}
 	int size() const { return maxSize; }
@@ -215,3 +218,6 @@ SeqList<T>& SeqList<T>::operator=(SeqList<T>& L)
 
 	return *this;
 }
+
+
+#endif
