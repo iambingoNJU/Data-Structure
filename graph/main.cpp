@@ -27,6 +27,8 @@ int main()
 	cout<<endl<<"BFS order: ";
 	lg1.BFS('A');
 */
+
+
 	LinkGraph<char,int> lg2;
 	for(int i=0; i<5; i++)
 		lg2.insertVertex('A'+i);
