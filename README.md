@@ -1,1 +1,1 @@
-#Some data struction's implementation.
+#Some data structure's implementation.
